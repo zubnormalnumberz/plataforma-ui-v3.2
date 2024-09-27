@@ -1,0 +1,1320 @@
+<!DOCTYPE HTML
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/fk/lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/fk/lib/easyui/themes/icon.css" />
+    <link rel="Shortcut Icon" href="@_(" ${design.public_img}")/favicon.ico" type="image/x-icon" />
+
+    <title>@_("${datos_fiscales.nombre_comercial}")</title>
+    <style>
+        body {
+            font-family: verdana, helvetica, arial, sans-serif;
+            background: #fff;
+        }
+
+        .glimpse-inline {
+            display: none;
+        }
+    </style>
+    @if(! FastKode.App.IsProduction) {
+    <style>
+        .panel-body.accordion-body {
+            background-color: yellow;
+        }
+    </style>
+    }
+
+    <script type="text/javascript" src="/fk/lib/easyui/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="/fk/lib/easyui/jquery.easyui.min.js"></script>
+
+    <script type="text/javascript">
+        window.onerror = function (msg, url, line, col, error) {
+            // Note that col & error are new to the HTML 5 spec and may not be 
+            // supported in every browser.  It worked for me in Chrome.
+            var extra = !col ? '' : '\ncolumn: ' + col;
+            extra += !error ? '' : '\nerror: ' + error;
+
+            // You can view the information in an alert to see things working like this:
+            alert("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
+
+            // TODO: Report this error via ajax so you can keep track
+            //       of what pages have JS issues
+
+            var suppressErrorAlert = true;
+            // If you return true, then error alerts (like in older versions of 
+            // Internet Explorer) will be suppressed.
+            return suppressErrorAlert;
+        };
+
+    </script>
+
+    <script type="text/javascript">
+        /* llamar siempre con parent. */
+        function gotoURL(tab, tab_title, url) {
+            changeURL(tab, tab_title, url);
+        }
+
+
+        function changeURL(tab, tab_title, url) {
+            var tab = $(tab);
+            $('#tt').tabs('update', {
+                tab: tab,
+                options: {
+                    title: tab_title,
+                    content: iframe_content(url)  // the new content URL
+                }
+            });
+        }
+
+        function setTitle(tab, tab_title) {
+            var tab = $(tab);
+            var index = $('#tt').tabs('getTabIndex', tab);
+            var titulo = $('#tt .tabs .tabs-title').get(index);
+            $(titulo).text(tab_title);
+
+            //$(tab).find("tabs-title").text(tab_title);
+
+            /*
+            $('#tt').tabs('update', {
+                tab: tab,
+                options: {
+                    title: tab_title
+                }
+            });
+            */
+        }
+
+        //Llamar a función de iframe:
+        //document.getElementById('targetFrame').contentWindow.targetFunction();
+
+        var tabs_ids = 0;
+
+        function addTab(title, url) {
+
+
+            if ($('#tt').tabs('exists', title)) {
+                $('#tt').tabs('select', title);
+            } else {
+                //url = encodeURI(url)
+                $('#tt').tabs('add', {
+                    title: title,
+                    content: iframe_content(url),
+                    closable: true
+                    /*,
+                    id: 'tab_' + tabs_ids*/
+                });
+
+                tabs_ids++;
+            }
+        }
+
+        function closeTab(tab) {
+            var tab = $(tab);
+            var index = $('#tt').tabs('getTabIndex', tab);
+            $('#tt').tabs('close', index);
+        }
+
+        function closeSelectedTab() {
+            var tab = $('#tt').tabs('getSelected');
+            var index = $('#tt').tabs('getTabIndex', tab);
+            $('#tt').tabs('close', index);
+        }
+
+        function updateTabOnSelectEvent(title, index) {
+            var tab = $('#tt').tabs('getTab', index);
+            updateTabContent(tab);
+        }
+
+        function updateSelectedTab() {
+            var tab = $('#tt').tabs('getSelected');
+            updateTabContent(tab);
+        }
+
+        function updateTabContent(tab) {
+            var iframe = tab.find('iframe')[0];
+            var iframeWindow = iframe.contentWindow;
+            /*
+            var iframeDocument;
+            try{
+                iframeDocument = iframeWindow.document;
+            }catch(e){
+                return;
+            }
+            if (iframeDocument && iframeWindow.$) {
+                iframeWindow.$(iframeDocument).trigger('update_content');
+            }
+            */
+        }
+
+        function reloadSelectedTab() {
+            var tab = $('#tt').tabs('getSelected');
+            var iframe = tab.find('iframe')[0];
+            var iframeWindow = iframe.contentWindow;
+            if (iframeWindow.location.hostname !== '') {
+                iframeWindow.location.reload();
+            }
+        }
+
+        function iframe_content(url) {
+            return '<iframe data-options="fit:true" scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
+        }
+
+    </script>
+</head>
+
+<body class="easyui-layout" id="cc">
+    <div data-options="region:'north', collapsible: true" style="height:75px;
+    @(!FastKode.App.IsProduction ? " background-color: yellow;" : "" )">
+        <img src="@_(" ${design.public_img}")/logo_646x289.png"
+            style="height:70px; margin-left: 25px;margin-top: 2px; float: left;"
+            onclick="$('#cc').layout('collapse', 'north');" />
+        <div style="float: left;">
+            @if(!FastKode.App.CurrentUserIs("elkartea")){
+            <div>
+                <a class="easyui-linkbutton button-edit l-btn l-btn-small" href="/filemanager/index.html"
+                    target="_blank">Explorar ficheros</a>
+            </div>
+            }
+        </div>
+
+        <div style="float:right">
+            Nuevo <a href="forms/AltaSocio/P1_DatosSocio?_lang_set=es" target="_blank"> socio</a> | <a
+                href="forms/AltaContrato/P1_DatosSocio?_lang_set=es" target="_blank">contrato</a> |
+            <a href="/preventa/Menor10kW/Index" target="_blank">Oferta</a>
+            @if(FastKode.App.Instance.name == "goi")
+            { <br>
+            <label>Berria </label><a href="forms/AltaSocio/P1_DatosSocio?_lang_set=eu" target="_blank"> bazkide | </a>
+            <a href="forms/AltaContrato/P1_DatosSocio?_lang_set=eu" target="_blank">kontratua</a>
+            }
+            <BR /><BR />
+            @(HttpContext.Current.User.Identity.Name) | <a
+                href="@(FormsAuthentication.LoginUrl)?ReturnUrl=%2fDefault.cshtml&logout=true">Cerrar sesión</a>
+            @GitVersion.Version
+        </div>
+
+
+        @if(! FastKode.App.IsProduction){
+        <div style="float: right;background-color: bisque;height: 100%;width: 200px;padding: 10px;margin-right: 10px;">
+            <a href="/glimpse.axd">Glimpse</a>
+            <a href="/hangfire">Hangfire</a>
+            <a href="/core_dev/Screen/SQLProfiler/Index">SQL Profiler</a>
+        </div>
+        }
+
+    </div>
+    <div data-options="region:'west',split:true" title=" " style="width:200px;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+
+            @if(autorizationService.AuthorizeAction("menu/datos")){
+            <div title="Datos" style="padding:10px">
+                @if(autorizationService.AuthorizeAction("menu/datos/socios")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Socios','clientes/Screen/Socio/Index')">Socios</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/contratos")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Contratos','clientes/Screen/Contrato/Index')">Contratos</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/personas")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Personas','clientes/Screen/Persona/Index')">Personas</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/facturas")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Facturas','facturacion/Screen/Factura/Index')">Facturas</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/cups")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Cups','/mod/clientes/screen/cups_lista.aspx')">CUPS</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/distribuidoras")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Distribuidoras','clientes/Screen/Distribuidoras/Index')">Distribuidoras</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/monedero")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Monedero virtual','monedero_virtual/Screen/MonederoVirtual/Index')">Monedero
+                    virtual</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/sms")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('SMS','proceso/Screen/RegistroSMS/Index')">Registro SMS</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/mail")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Mails','core_mail/Screen/RegistroMail/Index')">Registro e-mail</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/sips")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('SIPS','/sips/DatosSips')">SIPS</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/ayuntamientos")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Ayuntamientos','tasa_municipal/Screen/Ayuntamiento/Index')">Ayuntamientos</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/tasa_municipal")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Tasa municipal','tasa_municipal/Screen/TasaMunicipal/Index')">Tasa
+                    Municipal</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/reclamaciones")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Adj.Dist.','/distribuidoras/GestionarAdjuntos')">Adjuntos distribuidora</a><br />
+                }
+                @* @if(autorizationService.AuthorizeAction("menu/datos/cambios_masivos_tarifa")){ *@
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Cambios masivos de tarifa','/proceso/Screen/CambiosMasivosTarifa/Index')">Cambios
+                    masivos de tarifa</a><br />
+                @* } *@
+                <!--@if(autorizationService.AuthorizeAction("menu/datos/migracion")){
+                <a href="#" class="easyui-linkbutton" style="width:120px" onclick="addTab('Migración 2021','/migracion_tarifas2021/Migracion2021')">Migración Contratos 2021</a><br />
+                }
+                @if(autorizationService.AuthorizeAction("menu/datos/incidencias")){
+                <a href="#" class="easyui-linkbutton" style="width:120px" onclick="addTab('Incidencias 2021','/migracion_tarifas2021/Incidencias')">Incidencias Migración 2021</a><br />
+                }-->
+                @if(autorizationService.AuthorizeAction("menu/datos/extranet")){
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Estadisticas Extranet','/estadisticas/Extranet')">Estadisticas extranet</a><br />
+                }
+            </div>
+            }
+
+
+            @if(autorizationService.AuthorizeAction("menu/procesos")){
+            <div title="Procesos" style="padding:10px">
+                <ul class="easyui-tree">
+                    @using(var dbContextScope = new Mehdime.Entity.DbContextScopeFactory().CreateReadOnly()){
+                    var context = dbContextScope.DbContexts.Get<FKEntity.DB>();
+
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(cliente_alta)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+                        //UI3
+                        foreach (var proceso in si.WFProcessList.ProcessList(typeof(recepcion_xml)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(socio_alta)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen?estado=@estado.Name')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+                        //UI3
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(ronda_aportacion_voluntaria)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(ronda_aportacion_obligatoria),
+                        typeof(mod.facturacion.process.proceso_incidencia_fact)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen?estado=@estado.Name')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+                        //UI3
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(socio_baja)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(proceso_reclamaciones)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen?estado=@estado.Name')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+                        //UI3
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(proceso_autoconsumo)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(mod.contabilidad.process.proceso_factura_recibida),
+                        typeof(mod.contabilidad.process.proceso_factura_emitida),
+                        typeof(mod.contabilidad.process.proceso_devengo),
+                        typeof(proceso_remesa_cobros_pagos)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen?estado=@estado.Name')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+
+                        //UI3
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(mod.impagos.process.proceso_factura_impagada)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+
+                        foreach (var proceso in si.WFProcessList.ProcessList(
+                        typeof(mod.preventa.process.proceso_preventa)).ToList())
+                        {
+                        var module_name = proceso.GetType().Namespace.Split('.')[1];
+                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                        <li data-options="state:'closed'">
+                            <span> @proceso.Name.Replace("proceso_","") </span>
+                            <ul>
+                                @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                "/_todos")){
+                                <li><a href="#"
+                                        onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                </li>
+                                }
+
+                                @{
+                                var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                var dictionary = conn.PrepareCommand("SELECT * FROM
+                                core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                    .ToDictionary(i => i.estado_activo, i => i);
+                                    }
+
+                                    @foreach (var estado in proceso.TaskList)
+                                    {
+                                    if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/" + estado.CodeName))
+                                    {
+                                    var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                    "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                    var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                    estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen?estado=@estado.Name')">@estado.Description
+                                            (@contadores.num_total_casos)
+                                            @if(contadores.num_casos_caducados>0){<span
+                                                style="color:red">(@contadores.num_casos_caducados)</span>}
+                                        </a></li>
+                                    }
+                                    }
+                            </ul>
+                        </li>
+                        }
+                        }
+
+
+                        }
+                </ul>
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/informes")){
+            <div title="Informes" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Informes','informes/Screen/Informes/Index')">Informes</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Informes CNMC','informes/Screen/InformesCNMC/Index')">CNMC</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('ESCILA','facturacion/Screen/Escila/Index')">ESCILA</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Informe Impuesto Electrico 560','/informes/InformeImpuestoElectrico')">Impuesto
+                    Electrico 560</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Modelo 159','/facturacion/Modelo159')">Modelo 159</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Modelo 194','/facturacion/Modelo194')">Modelo 194</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Lista emails','/informes/ListaMailing')">Lista Email</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Lista emails','/informes/ListaMailingClientes')">Lista Email Clientes</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Contratos sin firmar','informes/Screen/RevisionContratosFirmados/Index')">Revisión
+                    contratos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Lista precios tarifas','/informes/PreciosTarifas')">Lista precios tarifas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Facturacion Bono Social Pendiente','/informes/FactBOSOCPendiente')">Facturacion
+                    Bono Social Pendiente</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Revisión precios','/informes/ListaRevisionPrecios')">Lista revisión
+                    precios</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Listado CP Distribuidora','informes/Screen/InformeCPDistribuidora/Index')">Listado
+                    CP Distribuidora</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/facturacion")){
+            <div title="Facturación" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Remesas','/facturacion/Remesa')">Remesas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Lecturas horarias','/facturacion/LecturasHorarias')">Lecturas horarias</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Lecturas','/facturacion/Screen/Lecturas/Index')">Lecturas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Incidencias','/facturacion/Screen/Incidencias/Index')">Incidencias</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Lecturas pendientes (no indexados)','/facturacion/Screen/Lecturas/PendientesNoIndexados')">Lecturas
+                    pendientes (no indexados)</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Indexados pendientes','/facturacion/Screen/Lecturas/PendientesIndexados')">Indexados
+                    pendientes</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Borradores Fact.','/facturacion/Borrador')">Borradores facturas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Multipunto','/facturacion/Multipunto')">Multipunto</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Gestión de lotes', 'facturacion/Screen/GestionLote/Index')">Gestión de
+                    lotes</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Facturas','facturacion/Screen/Factura/Index')">Facturas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Abonar y clonar masivos','facturacion/Screen/AbonarClonarMasivos/Index')">Abonar y
+                    clonar masivos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Facturae XML','/facturacion/Screen/Facturae/Index')">XML Facturae</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Anticipos','/facturacion/Screen/Anticipos/Index')">Anticipos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Extracción de PDFs de facturas','/facturacion/Screen/ExtraccionPDFFacturas/Index')">Extracción
+                    de PDFs de facturas</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/contabilidad")){
+            <div title="Contabilidad" style="padding: 10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Maestro cuentas', 'contabilidad/Screen/MaestroCuenta/Index')">Maestro
+                    cuentas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Diario', '/contabilidad/Asiento/Diario')">Diario</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Importes pendientes', '/contabilidad/ImportesPendientes')">Importes
+                    pendientes</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Remesa bancaria', '/contabilidad/Efecto')">Iniciar remesa bancaria</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Conciliacion', '/contabilidad/Efecto/Conciliacion')">Conciliacion</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Giros: Devoluciones', '/contabilidad/Giros/Devoluciones')">Giros:
+                    Devoluciones</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Cobros pendientes', '/contabilidad/Efecto/Transferencias')">Cobros
+                    pendientes</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Sumas y saldos', '/contabilidad/SumasYSaldos')">Sumas y saldos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width: 120px"
+                    onclick="addTab('Ejercicios', '/contabilidad/EjercicioContable')">Ejercicios</a><br />
+                <!-- Los dejo dentro de facturacion para no liarlo con los modulos que ya existen en contabilidad-->
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Facturas recibidas','/facturacion/FacturaRecibida')">Facturas recibidas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Facturas emitidas','/facturacion/FacturaEmitida')">Facturas emitidas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Exportar Contabilidad','/contabilidad/Screen/Exportar/Index')">Exportar</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Exportar SII','/contabilidad/Screen/ExportarSII/Index')">Exportar SII</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/generacion")){
+            <div title="Generación" style="padding: 10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Socios generación','/apor_generacion/Screen/SocioGeneracion/Index')">Socio</a><br />
+                <!--<a href="#" class="easyui-linkbutton" style="width:120px" onclick="addTab('Cálculo intereses', 'apor_generacion/Plataforma/intereses')">Cálculo intereses</a><br />-->
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Ejercicios', '/apor_generacion/Aportaciones')">Ejercicios</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Modelo 193','/facturacion/Modelo193')">Modelo 193</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Modelo 194','/facturacion/Modelo194Nafarkoop')">Modelo 194</a><br />
+
+                @if(autorizationService.AuthorizeAction("menu/procesos")){
+                <div title="Procesos" style="padding-top:10px">
+                    <ul class="easyui-tree">
+                        @using(var dbContextScope = new Mehdime.Entity.DbContextScopeFactory().CreateReadOnly()){
+                        var context = dbContextScope.DbContexts.Get<FKEntity.DB>();
+
+                            foreach (var proceso in si.WFProcessList.ProcessList(
+                            typeof(mod.apor_generacion.process.proceso_ronda_aportacion)).ToList())
+                            {
+                            var module_name = proceso.GetType().Namespace.Split('.')[1];
+                            if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                            <li data-options="state:'closed'">
+                                <span> @proceso.Name.Replace("proceso_","") </span>
+                                <ul>
+                                    @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/_todos")){
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                    </li>
+                                    }
+
+                                    @{
+                                    var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                    var dictionary = conn.PrepareCommand("SELECT * FROM
+                                    core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                    .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                        .ToDictionary(i => i.estado_activo, i => i);
+                                        }
+
+                                        @foreach (var estado in proceso.TaskList)
+                                        {
+                                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name
+                                        + "/" + estado.CodeName))
+                                        {
+                                        var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                        "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                        var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                        estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                        <li><a href="#"
+                                                onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen?estado=@estado.Name')">@estado.Description
+                                                (@contadores.num_total_casos)
+                                                @if(contadores.num_casos_caducados>0){<span
+                                                    style="color:red">(@contadores.num_casos_caducados)</span>}
+                                            </a></li>
+                                        }
+                                        }
+                                </ul>
+                            </li>
+                            }
+
+                            }
+
+                            //UI3
+                            foreach (var proceso in si.WFProcessList.ProcessList(
+                            typeof(mod.autoconsumo.process.proceso_informe_autoconsumo)).ToList())
+                            {
+                            var module_name = proceso.GetType().Namespace.Split('.')[1];
+                            if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                            <li data-options="state:'closed'">
+                                <span> @proceso.Name.Replace("proceso_","") </span>
+                                <ul>
+
+                                    @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/_todos")){
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?estado=')">TODOS</a>
+                                    </li>
+                                    }
+
+                                    @{
+                                    var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                    var dictionary = conn.PrepareCommand("SELECT * FROM
+                                    core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                    .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                        .ToDictionary(i => i.estado_activo, i => i);
+                                        }
+
+                                        @foreach (var estado in proceso.TaskList)
+                                        {
+                                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name
+                                        + "/" + estado.CodeName))
+                                        {
+                                        var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                        "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                        var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                        estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                        <li><a href="#"
+                                                onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                                (@contadores.num_total_casos)
+                                                @if(contadores.num_casos_caducados>0){<span
+                                                    style="color:red">(@contadores.num_casos_caducados)</span>}
+                                            </a></li>
+                                        }
+                                        }
+                                </ul>
+                            </li>
+                            }
+                            }
+                            }
+                    </ul>
+                </div>
+                }
+
+
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/mercados")){
+            <div title="Mercados" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Carga ficheros', 'mercados/Ficheros/Index')">Carga ficheros</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Informes MENSUALES', 'mercados/Informes/infmensual')">Informes MENSUALES</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Informes ANUALES', 'mercados/Informes/infanual')">Informes ANUALES</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Descargas', 'mercados/Descarga/IniciarDescarga')">Descargas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Detalle periodificación', 'mercados/Margen/Index')">Detalle
+                    periodificación</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Cambio componentes precio', 'mercados/Screen/CambioPrecio/Index')">Cambio
+                    componentes precio</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Retribuciones', 'mercados/Screen/Retribuciones/Index')">Retribuciones</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Informe NEURO', 'mercados/Screen/InformeNeuro/Index')">Informe NEURO</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Actualizar medidas NEURO', 'mercados/Screen/ActualizarMedidasNEURO/Index')">Actualizar
+                    medidas NEURO</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Previsiones', 'mercados/Screen/Prevision/Previsiones')">Previsiones</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Real Periodificado', 'mercados/Screen/DatosReal/DatosReal')">Real
+                    periodificado</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/representacion_productores")){
+            <div title="Productores" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Productores representados', 'representacion_productores/Productor/Index')">Productores</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Instalaciones grupo', 'representacion_productores/Instalacion/Index')">Instalaciones
+                    grupo</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Instalaciones CIL', 'representacion_productores/Cil/Index')">Instalaciones
+                    CIL</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Contratos', 'representacion_productores/Contrato/Index')">Contratos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Tipos de liquidación','representacion_productores/Screen/TipoLiquidacion/Index')">Tipos
+                    de liquidación</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Remesas', 'representacion_productores/Remesa/Index')">Remesas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Liquidaciones', 'representacion_productores/Liquidaciones/Index')">Liquidaciones</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Liquidaciones sin asignar', 'representacion_productores/Liquidaciones/IndexSinAsignar')">Liquidaciones
+                    sin asignar</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Facturas', 'representacion_productores/Factura/Index')">Facturas</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/coberturas")){
+            <div title="Coberturas" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Coberturas', 'coberturas/Screen/Cobertura/Index')">Coberturas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Representados', 'coberturas/Screen/Representado/Index')">Representados</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/CRM") && FastKode.App.Instance.name == "goi"){
+            <div title="CRM" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Responsable', 'crm/Screen/Responsable/Responsable')">Responsable</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Responsab', 'crm/Screen/Contacto/Contactos')">Contactos</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/entidades")){
+            <div title="Entidades" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Oferta multicups', 'preventa/Screen/GestionMulticups/Index')">Oferta
+                    multicups</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Revisión Indexados', 'proceso/Screen/RevisionIndexados/Index')">Revisión
+                    Indexados</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/Comunicación")){
+            <div title="Comunicación" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Campañas', 'notificaciones/Screen/Notificaciones/Index')">Campañas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Plantillas', 'notificaciones/Screen/GeneradorPlantilla/Index')">Plantillas</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('BlackList', 'notificaciones/Screen/ListaExcluidos/Index')">Blacklist</a><br />
+            </div>
+            }
+
+            @if(autorizationService.AuthorizeAction("menu/avanzado")){
+            <div title="Avanzado" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Usuarios', 'clientes/Screen/Usuario/Index')">Usuarios</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Jobs', 'general/Screen/Job/Index')">Jobs</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Actions', 'general/Screen/Action/Index')">Actions</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Procesos', 'core_wf/WFDoc')">Documentacion procesos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Modelo', 'fk/mod/core_dev/screen/doc')">Documentacion modelo de datos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Convertir factura recibida', '/facturacion/FacturaRecibida/ConvertirFacturaRecibida')">Convertir
+                    factura recibida</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Actualizar interanual CUPS', '/clientes/Screen/ActualizarInteranualCups/Index')">Actualizar
+                    interanual CUPS</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Actualizar medidas SIPS', '/clientes/Screen/ActualizarMedidasSIPS/Index')">Actualizar
+                    medidas SIPS</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Netear efectos', '/contabilidad/Efecto/NetearEfectos')">Netear efectos</a><br />
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Actualizar fechas', '/proceso/Screen/ActualizarFechas/Index')">Actualizar
+                    fechas</a><br />
+            </div>
+            }
+            @if(autorizationService.AuthorizeAction("menu/datos_internos")){
+            <div title="Datos Internos" style="padding:10px">
+                <ul class="easyui-tree">
+
+                    @foreach (var pkg in FastKode.App.model.pkg.Values)
+                    {
+                    <li data-options="state:'closed'">
+                        <span> @pkg.name </span>
+                        <ul>
+                            @foreach (var ent in pkg.ent.Values)
+                            {
+                            <li><a href="#"
+                                    onclick="addTab('@ent.name','/fk/ui/data/data_list.cshtml?p=@pkg.name&e=@ent.name')">@ent.name</a>
+                            </li>
+                            }
+                        </ul>
+                    </li>
+                    }
+
+                </ul>
+            </div>
+            }
+            @if(autorizationService.AuthorizeAction("menu/elkartea")){
+            <div title="Elkartea" style="padding:10px">
+                <a href="#" class="easyui-linkbutton" style="width:120px"
+                    onclick="addTab('Socios elkartea','elkartea/Screen/Socio/Index')">Socios</a><br />
+
+                <div title="Casos" style="padding:10px">
+                    <ul class="easyui-tree">
+                        @using(var dbContextScope = new Mehdime.Entity.DbContextScopeFactory().CreateReadOnly()){
+                        var context = dbContextScope.DbContexts.Get<FKEntity.DB>();
+
+                            //UI3
+                            foreach (var proceso in si.WFProcessList.ProcessList(
+                            typeof(alta_socio_elkartea)).ToList())
+                            {
+                            var module_name = proceso.GetType().Namespace.Split('.')[1];
+                            if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name)){
+                            <li data-options="state:'closed'">
+                                <span> @proceso.Name.Replace("proceso_","") </span>
+                                <ul>
+
+                                    @if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name +
+                                    "/_todos")){
+                                    <li><a href="#"
+                                            onclick="addTab('@(proceso.Name)_TODOS','@( proceso.CustomScreenAll ?? proceso.CustomScreen )?#%22estado%22:%22todos%22')">TODOS</a>
+                                    </li>
+                                    }
+
+                                    @{
+                                    var conn = context.Database.Connection as Npgsql.NpgsqlConnection;
+                                    var dictionary = conn.PrepareCommand("SELECT * FROM
+                                    core_wf.estadisticas_casos_por_estado WHERE estado_activo IS NOT NULL;")
+                                    .ExecuteReader().ExecQueryRowsToObjects<estadisticas_casos_por_estado>()
+                                        .ToDictionary(i => i.estado_activo, i => i);
+                                        }
+
+                                        @foreach (var estado in proceso.TaskList)
+                                        {
+                                        if(autorizationService.AuthorizeAction(module_name + "/process/" + proceso.Name
+                                        + "/" + estado.CodeName))
+                                        {
+                                        var screen = estado.CustomScreen ?? proceso.CustomScreen ??
+                                        "/fk/mod/core_wf/screen/caso_estado_lista.aspx";
+                                        var contadores = dictionary.TryGetValueOrDefault(estado.Name) ?? new
+                                        estadisticas_casos_por_estado{num_total_casos = 0, num_casos_caducados = 0};
+                                        <li><a href="#"
+                                                onclick="addTab('@(proceso.Name)_@(estado.Description)','@screen#%22estado%22:%22@(estado.Name)%22')">@estado.Description
+                                                (@contadores.num_total_casos)
+                                                @if(contadores.num_casos_caducados>0){<span
+                                                    style="color:red">(@contadores.num_casos_caducados)</span>}
+                                            </a></li>
+                                        }
+                                        }
+                                </ul>
+                            </li>
+                            }
+
+                            }
+                            }
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>
+
+    <div data-options="region:'center'">
+        <div id="tt" class="easyui-tabs"
+            data-options="fit:true,border:false,onSelect:updateTabOnSelectEvent,tools:'#tab-tools'">
+            <!--
+            <div title="Tab1" style="padding:20px;display:none;">
+                tab1
+            </div>
+            <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+                tab2
+            </div>
+            <div title="Datos" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
+            -->
+
+        </div>
+
+        <div id="tab-tools">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'"
+                onclick="closeSelectedTab()">Cerrar</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-reload'"
+                onclick="reloadSelectedTab()">Actualizar</a>
+        </div>
+    </div>
+
+    @if (! FastKode.App.IsProduction) {
+    <div style="
+        background-color: rgba(255, 0, 0, 0.85);
+        display: block;
+        position: absolute;
+        z-index: 10000;
+       
+        font-size: 16px;
+        text-align: center;
+        transform: rotate(-45deg);
+        top: 10px;
+        left: -125px;
+        width: 300px;
+        height: 25px;
+        border: 1px solid black;
+        pointer-events: none;
+
+        ">@FastKode.App.Enviroment.ToUpper()</div>
+    }
+    <!--
+Lista de permisos de la pantalla:
+@String.Join("\n", (new mod.core_users.AuthorizationService()).GetRequestedAutorization()) %>
+-->
+
+
+    <script type="text/javascript">window.ATL_JQ_PAGE_PROPS = {
+            "triggerFunction": function (showCollectorDialog) {
+                //Requires that jQuery is available!
+                jQuery("#issueFormButton").click(function (e) {
+                    e.preventDefault();
+                    showCollectorDialog();
+                });
+            }
+        };</script>
+</body>
+
+@if(FastKode.App.Instance.name == "goi"){
+<script>
+    $(document).ready(function () {
+        window.addTab('Responsables', '/crm/Screen/Responsable/Responsable')
+    });
+</script>
+}
+
+</html>
