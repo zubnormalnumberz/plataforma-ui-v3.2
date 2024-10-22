@@ -1058,12 +1058,336 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane container-fluid fade show active" id="home-tab-pane" role="tabpanel"
-                        aria-labelledby="home-tab" tabindex="0">...</div>
                     <div class="tab-pane container-fluid fade" id="profile-tab-pane" role="tabpanel"
                         aria-labelledby="profile-tab" tabindex="0">...</div>
                     <div class="tab-pane container-fluid fade" id="contact-tab-pane" role="tabpanel"
                         aria-labelledby="contact-tab" tabindex="0">...</div>
+                    <div class="tab-pane container-fluid show active fade pt-3" id="home-tab-pane" role="tabpanel"
+                        aria-labelledby="home-tab" tabindex="0">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-sm table-hover table-bordered">
+                                    <caption>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex">
+                                                <select style=" width: fit-content;" class="form-select form-select-sm"
+                                                    aria-label="Small select example">
+                                                    <option value="10">10</option>
+                                                    <option value="30">30</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+                                                <div class="vr mx-1"></div>
+                                                <div class="btn-group btn-group-sm" role="group"
+                                                    aria-label="Small button group">
+                                                    <button type="button" class="btn btn-primary" disabled><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-chevron-bar-left"
+                                                            viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0M4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5" />
+                                                        </svg></button>
+                                                    <button type="button" class="btn btn-primary" disabled><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-chevron-left"
+                                                            viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                                                        </svg>
+                                                    </button>
+                                                    <div class="d-inline-flex px-1">
+                                                        <div class="align-self-center pe-1">
+                                                            <span>Página </span>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <input class="form-control form-control-sm" type="text"
+                                                                aria-label=".form-control-sm example" value="1">
+                                                        </div>
+                                                        <div class="align-self-center ps-1">
+                                                            <span>de</span>
+                                                            <span>1380</span>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-chevron-right"
+                                                            viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
+                                                        </svg></button>
+                                                    <button type="button" class="btn btn-primary"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-chevron-bar-right"
+                                                            viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0M11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5" />
+                                                        </svg></button>
+                                                </div>
+                                                <div class="vr mx-1"></div>
+                                                <div class="btn-group btn-group-sm" role="group"
+                                                    aria-label="Small button group">
+                                                    <button type="button" class="btn btn-primary"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-arrow-repeat"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                                                        </svg></button>
+                                                    <button type="button" class="btn btn-primary"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-download"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                                            <path
+                                                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="align-self-center">
+                                                Mostrando 1 a 10 de 13799 elementos
+                                            </div>
+                                        </div>
+                                    </caption>
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">
+                                                <button type="button" class="btn btn-light btn-sm">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                    </svg>
+                                                </button>
+                                            </th>
+                                            <th scope="col">CUPS</th>
+                                            <th scope="col">Distribuidora</th>
+                                            <th scope="col">No facturar</th>
+                                            <th scope="col">Socorro</th>
+                                            <th scope="col">Provincia</th>
+                                            <th scope="col">Municipio</th>
+                                            <th scope="col">CP</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Nombre dirección</th>
+                                            <th scope="col">N</th>
+                                            <th scope="col">P</th>
+                                            <th scope="col">M</th>
+                                            <th scope="col">Provee lecturas horarias</th>
+                                            <th scope="col">Puntos medida para facturar</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">
+                                                <div class="d-inline-flex">
+                                                    <div class="px-2">
+                                                        <select class="form-select form-select-sm"
+                                                            aria-label="Small select example">
+                                                            <option value="1">No filtrar</option>
+                                                            <option selected>...a...</option>
+                                                            <option value="1">></option>
+                                                            <option value="3">=</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="flex-grow-1 px-2">
+                                                        <input class="form-control form-control-sm" type="text"
+                                                            placeholder="" aria-label=".form-control-sm example">
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</th>
+                                            <td><a href="#">ES0113606473607686KP</a></td>
+                                            <td><a href="#">0021</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Araba/Álava</td>
+                                            <td>Amurrio</td>
+                                            <td>01240</td>
+                                            <td>Calle</td>
+                                            <td>Predio de Pula</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>CC</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</th>
+                                            <td><a href="#">ES0026560335969926FV</a></td>
+                                            <td><a href="#">0026</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Gipuzkoa</td>
+                                            <td>Aretxabaleta</td>
+                                            <td>01240</td>
+                                            <td>Calle</td>
+                                            <td>Principe Carlos</td>
+                                            <td>19</td>
+                                            <td>3</td>
+                                            <td>Derecha</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</th>
+                                            <td><a href="#">ES0023309218308939LQ</a></td>
+                                            <td><a href="#">0023</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Araba/Álava</td>
+                                            <td>Amurrio</td>
+                                            <td>01240</td>
+                                            <td>Paseo</td>
+                                            <td>Estacion</td>
+                                            <td>19</td>
+                                            <td>1</td>
+                                            <td>C</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</th>
+                                            <td><a href="#">ES0021430830213159BW</a></td>
+                                            <td><a href="#">0021</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Valencia</td>
+                                            <td>Valencia</td>
+                                            <td>01240</td>
+                                            <td>Barrio</td>
+                                            <td>Orinon</td>
+                                            <td>2</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</th>
+                                            <td><a href="#">ES0024288063521806YS</a></td>
+                                            <td><a href="#">0024</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Navarra</td>
+                                            <td>Bakaiku</td>
+                                            <td>01240</td>
+                                            <td>Vereda</td>
+                                            <td>Rincon de Gallego</td>
+                                            <td>22</td>
+                                            <td>18</td>
+                                            <td>E</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</th>
+                                            <td><a href="#">ES0032532604375252NJ</a></td>
+                                            <td><a href="#">0032</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Araba/Álava</td>
+                                            <td>Amurrio</td>
+                                            <td>01240</td>
+                                            <td>Carretera</td>
+                                            <td>Barcelona</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>A</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</th>
+                                            <td><a href="#">ES0021280729487749RT</a></td>
+                                            <td><a href="#">0021</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Bizkaia/Vizcaya</td>
+                                            <td>Bilbao</td>
+                                            <td>01240</td>
+                                            <td>Carretera</td>
+                                            <td>Palma - Soller</td>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>Izquierda</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</th>
+                                            <td><a href="#">ES0177079786742041AX</a></td>
+                                            <td><a href="#">0177</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Araba/Álava</td>
+                                            <td>Amurrio</td>
+                                            <td>01240</td>
+                                            <td>Calle</td>
+                                            <td>Cristobal Colon</td>
+                                            <td>18</td>
+                                            <td>2</td>
+                                            <td>D</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</th>
+                                            <td><a href="#">ES0029091880390842MM</a></td>
+                                            <td><a href="#">0029</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Araba/Álava</td>
+                                            <td>Amurrio</td>
+                                            <td>01240</td>
+                                            <td>Camino</td>
+                                            <td>Sant Joan de Missa</td>
+                                            <td>15</td>
+                                            <td>2</td>
+                                            <td>B</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</th>
+                                            <td><a href="#">ES3140162094478226HZ</a></td>
+                                            <td><a href="#">3140</a></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Araba/Álava</td>
+                                            <td>Amurrio</td>
+                                            <td>01240</td>
+                                            <td>Calle</td>
+                                            <td>Oilakineta</td>
+                                            <td>23</td>
+                                            <td>1</td>
+                                            <td>D</td>
+                                            <td>Si</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tab-pane container-fluid fade pt-3" id="disabled-tab-pane" role="tabpanel"
                         aria-labelledby="disabled-tab" tabindex="0">
                         <div class="card">
@@ -1146,6 +1470,44 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Descarga de listado detallado de facturas
+                        </h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal2" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Descarga de lecturas horarias
+                        </h1>
+                    </div>
+                    <div class="modal-body">
+                        Error cargando datos
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">OK</button>
                     </div>
                 </div>
             </div>
