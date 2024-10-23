@@ -37,3 +37,31 @@
 .width-max-content {
     width: max-content;
 }
+
+.panel {
+    transition: width 0.3s ease;
+}
+
+.panel.collapsed {
+    width: 50px !important;
+}
+
+.panel.collapsed *:not(#toggleButton):not(#toggleButton *) {
+    display: none;
+}
+
+#icon {
+    transition: transform 0.3s ease;
+}
+
+.rotate-right {
+    transform: rotate(180deg);
+}
+
+.rotate-left {
+    transform: rotate(0deg);
+}
+
+.visible {
+    display: block;
+}

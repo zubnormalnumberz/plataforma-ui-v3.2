@@ -67,20 +67,15 @@
             </div>
         </header>
         <div class="d-flex flex-nowrap">
-            <div id="left-panel" class="flex-shrink-0 px-2 overflow-scroll" style="width: 225px; height: calc(100vh - 70px);">
+            <div id="left-panel" class="flex-shrink-0 px-2 overflow-scroll panel"
+                style="width: 225px; height: calc(100vh - 70px);">
                 <div class="d-flex pt-2 justify-content-between">
-                    <button type="button" class="btn btn-light btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
-                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
-                        </svg>
+                    <button type="button" id="btnReload" onclick="resetLeftPanelSize()" class="btn btn-light btn-sm">
+                        <i class="bi bi-arrow-clockwise"></i>
                     </button>
-                    <button type="button" class="btn btn-light btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                            <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                        </svg>
-                    </button>    
+                    <button type="button" id="toggleButton" onclick="toggleIcon()" class="btn btn-light btn-sm">
+                        <i id="icon" class="bi bi-chevron-double-left"></i>
+                    </button>
                 </div>
                 <hr>
                 <ul class="list-unstyled ps-0 accordion" id="accordionExample">
