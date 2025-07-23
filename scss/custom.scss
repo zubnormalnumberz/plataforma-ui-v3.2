@@ -22,3 +22,24 @@ hr {
 .modal-header-danger {
     background-color: $danger;
 }
+
+.col-form-label-sm {
+    font-size: 0.85rem;
+}
+
+.input-group-sm>.form-control,
+.input-group-sm>.form-select,
+.input-group-sm>.input-group-text,
+.input-group-sm>.btn {
+    font-size: 0.85rem;
+}
+
+.form-control-sm {
+    font-size: 0.85rem;
+}
+
+.card-header {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    font-weight: 600;
+}
