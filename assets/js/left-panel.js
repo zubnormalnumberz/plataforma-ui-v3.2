@@ -4,6 +4,9 @@ const mainContent = document.getElementById('main-content');
 const myButton = document.getElementById('btnReload');
 const constantWidth = 225;
 
+window.toggleIcon = toggleIcon;
+window.resetLeftPanelSize = resetLeftPanelSize;
+
 let isResizing = false;
 
 resizer.addEventListener('mousedown', function (e) {
