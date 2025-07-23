@@ -20,47 +20,42 @@
     <link href="scss/custom.css" rel="stylesheet">
 </head>
 
-<body>
-    <main>
-        <header class="border-bottom">
-            <div class="container-fluid d-flex flex-row">
-                <div class="p-2 align-self-center">
-                    <img src="assets/img/logo_646x289.png" style="height:70px;" />
+<body class="d-flex flex-column vh-100">
+    <header class="border-bottom">
+        <div class="container-fluid d-flex flex-row">
+            <div class="p-2 align-self-center">
+                <img src="assets/img/logo_646x289.png" style="height:70px;" />
+            </div>
+            <div class="p-2 align-self-center flex-grow-1">
+                <div class="d-flex justify-content-center">
+                    <a class="icon-link icon-link-hover" href="#">
+                        Explorar ficheros
+                        <i class="bi bi-folder-fill"></i>
+                    </a>
                 </div>
-                <div class="p-2 align-self-center flex-grow-1">
-                    <div class="d-flex justify-content-center">
-                        <a class="icon-link icon-link-hover" href="#">
-                            Explorar ficheros
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-folder-fill" viewBox="0 0 16 16">
-                                <path
-                                    d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3m-8.322.12q.322-.119.684-.12h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981z" />
-                            </svg>
-                        </a>
-                    </div>
 
-                </div>
-                <div class="p-2 align-self-center">
-                    Nuevo <a href="forms/AltaSocio/P1_DatosSocio?_lang_set=es" target="_blank"> Socio</a> | <a
-                        href="forms/AltaContrato/P1_DatosSocio?_lang_set=es" target="_blank">Contrato</a>
-                    <br>
-                    Nueva <a href="/preventa/Menor10kW/Index" target="_blank">Oferta</a>
-                </div>
-                <div class="p-2 align-self-center">
-                    <div class="d-flex flex-column">
-                        <div class="d-grid gap-2"><a class="btn btn-primary btn-sm"
-                                href="@(FormsAuthentication.LoginUrl)?ReturnUrl=%2fDefault.cshtml&logout=true"
-                                role="button">Cerrar
-                                sesión</a></div>
-                        <div><span class="badge text-bg-dark">oihan</span> <span
-                                class="badge text-bg-primary">1.4.558</span></div>
-                    </div>
+            </div>
+            <div class="p-2 align-self-center">
+                Nuevo <a href="forms/AltaSocio/P1_DatosSocio?_lang_set=es" target="_blank"> Socio</a> | <a
+                    href="forms/AltaContrato/P1_DatosSocio?_lang_set=es" target="_blank">Contrato</a>
+                <br>
+                Nueva <a href="/preventa/Menor10kW/Index" target="_blank">Oferta</a>
+            </div>
+            <div class="p-2 align-self-center">
+                <div class="d-flex flex-column">
+                    <div class="d-grid gap-2"><a class="btn btn-primary btn-sm"
+                            href="@(FormsAuthentication.LoginUrl)?ReturnUrl=%2fDefault.cshtml&logout=true"
+                            role="button">Cerrar
+                            sesión</a></div>
+                    <div><span class="badge text-bg-dark">oihan</span> <span
+                            class="badge text-bg-primary">1.4.558</span></div>
                 </div>
             </div>
-        </header>
-        <div class="d-flex flex-nowrap">
-            <div id="left-panel" class="flex-shrink-0 px-2 overflow-scroll panel"
-                style="width: 225px; height: calc(100vh - 70px);">
+        </div>
+    </header>
+    <main class="d-flex flex-row flex-fill overflow-hidden">
+        <div id="left-panel" class="flex-shrink-0 px-2 overflow-scroll panel" style="width: 225px">
+            <div id="toggleContainer" class="sticky-top bg-white">
                 <div class="d-flex pt-2 justify-content-between">
                     <button type="button" id="btnReload" onclick="resetLeftPanelSize()" class="btn btn-light btn-sm">
                         <i class="bi bi-arrow-clockwise"></i>
@@ -70,6 +65,8 @@
                     </button>
                 </div>
                 <hr>
+            </div>
+            <div>
                 <ul class="list-unstyled ps-0 accordion" id="accordionExample">
                     <li class="mb-1">
                         <button class="accordion-button d-inline-flex align-items-center rounded border-0"

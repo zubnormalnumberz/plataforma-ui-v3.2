@@ -46,7 +46,7 @@
     width: 50px !important;
 }
 
-.panel.collapsed *:not(#toggleButton):not(#toggleButton *) {
+.panel.collapsed *:not(#toggleContainer):not(#toggleButton):not(#toggleButton *) {
     display: none;
 }
 
