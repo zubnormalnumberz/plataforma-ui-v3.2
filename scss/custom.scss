@@ -8,6 +8,11 @@ $accordion-button-padding-y: 0.5em;
     background-color: unset;
 }
 
+.row>* {
+    padding-right: 0.25rem;
+    padding-left: 0.25rem;
+}
+
 .table {
     margin-bottom: 0px;
 }
@@ -42,5 +47,14 @@ hr {
 .card-header,
 .card-body {
     font-size: 0.85rem;
-    padding: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.container-card {
+    @extend .container-fluid;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
 }

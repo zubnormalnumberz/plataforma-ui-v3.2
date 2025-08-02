@@ -731,6 +731,7 @@ progress {
 
 .container,
 .container-fluid,
+.container-card,
 .container-xxl,
 .container-xl,
 .container-lg,
@@ -3936,6 +3937,7 @@ textarea.form-control-lg {
 }
 .navbar > .container,
 .navbar > .container-fluid,
+.navbar > .container-card,
 .navbar > .container-sm,
 .navbar > .container-md,
 .navbar > .container-lg,
@@ -12009,5 +12011,13 @@ hr {
 .card-header,
 .card-body {
   font-size: 0.85rem;
-  padding: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.container-card {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }/*# sourceMappingURL=custom.css.map */
