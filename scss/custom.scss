@@ -4,7 +4,8 @@ $accordion-button-padding-y: 0.5em;
 
 .no-border-card {
     @extend .card;
-    border: 0;
+    border: unset;
+    background-color: unset;
 }
 
 .table {
@@ -38,8 +39,8 @@ hr {
     font-size: 0.85rem;
 }
 
-.card-header {
+.card-header,
+.card-body {
     font-size: 0.85rem;
     padding: 0.5rem;
-    font-weight: 600;
 }

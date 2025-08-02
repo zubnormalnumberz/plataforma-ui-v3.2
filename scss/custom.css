@@ -11971,7 +11971,8 @@ textarea.form-control-lg {
   }
 }
 .no-border-card {
-  border: 0;
+  border: unset;
+  background-color: unset;
 }
 
 .table {
@@ -12005,8 +12006,8 @@ hr {
   font-size: 0.85rem;
 }
 
-.card-header {
+.card-header,
+.card-body {
   font-size: 0.85rem;
   padding: 0.5rem;
-  font-weight: 600;
 }/*# sourceMappingURL=custom.css.map */
