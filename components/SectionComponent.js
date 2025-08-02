@@ -29,14 +29,14 @@ export default {
                 {{title}}
             </div>
             <div v-if="collapsible" class="collapse show" :id="collapseId">
-                <div class="card-body">
-                    <div class="row">
+                <div class="card-body container-fluid row row-cols-12"">
+                    <div class="row row-cols-12">
                         <slot>Contenido por defecto</slot>
                     </div>
                 </div>
             </div>
             <div v-else class="card-body">
-                <div class="row">
+                <div class="container-fluid row row-cols-12 w-auto">
                     <slot>Contenido por defecto</slot>
                 </div>
             </div>
