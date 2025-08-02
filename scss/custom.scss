@@ -51,6 +51,11 @@ hr {
     padding-bottom: 0.25rem;
 }
 
+.card-header {
+    padding-left: 0.5rem;
+    font-weight: 600
+}
+
 .container-card {
     @extend .container-fluid;
     padding-left: 0;

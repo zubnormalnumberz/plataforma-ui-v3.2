@@ -12015,6 +12015,11 @@ hr {
   padding-bottom: 0.25rem;
 }
 
+.card-header {
+  padding-left: 0.5rem;
+  font-weight: 600;
+}
+
 .container-card {
   padding-left: 0;
   padding-right: 0;
