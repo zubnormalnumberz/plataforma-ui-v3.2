@@ -14,7 +14,7 @@ export default {
                 <div :id="collapseId" class="collapse show">
                     <div class="card-body">
                         <div class="container-card w-auto">
-                            <div class="row row-cols-12">
+                            <div class="row row-cols-12 row-gap-2">
                                 <slot>Contenido por defecto</slot>
                             </div>
                         </div>
