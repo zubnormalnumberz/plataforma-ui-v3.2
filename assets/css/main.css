@@ -65,3 +65,7 @@
 .visible {
     display: block;
 }
+
+.resize-none {
+    resize: none;
+}
