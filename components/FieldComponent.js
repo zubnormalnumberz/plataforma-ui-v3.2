@@ -8,7 +8,7 @@ export default {
     },
     template: `
         <label class="col-form-label col-form-label-sm pe-2 text-end align-self-start" v-bind:class="labelClassObject">{{label}}</label>
-        <div v-bind:class="inputClassObject">
+        <div class="my-auto" v-bind:class="inputClassObject">
             <slot>Input</slot>
         </div>
     `,
