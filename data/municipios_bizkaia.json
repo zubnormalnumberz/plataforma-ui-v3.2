@@ -1,0 +1,306 @@
+[
+    {
+        "municipio": "Abadiño",
+        "codigo_postal": "48220"
+    },
+    {
+        "municipio": "Abanto y Ciérvana-Abanto Zierbena",
+        "codigo_postal": "48500"
+    },
+    {
+        "municipio": "Ajangiz",
+        "codigo_postal": "48320"
+    },
+    {
+        "municipio": "Alonsotegi",
+        "codigo_postal": "48810"
+    },
+    {
+        "municipio": "Amorebieta-Etxano",
+        "codigo_postal": "48340"
+    },
+    {
+        "municipio": "Amoroto",
+        "codigo_postal": "48289"
+    },
+    {
+        "municipio": "Arakaldo",
+        "codigo_postal": "48498"
+    },
+    {
+        "municipio": "Arantzazu",
+        "codigo_postal": "48140"
+    },
+    {
+        "municipio": "Areatza",
+        "codigo_postal": "48143"
+    },
+    {
+        "municipio": "Arrankudiaga",
+        "codigo_postal": "48498"
+    },
+    {
+        "municipio": "Arratzu",
+        "codigo_postal": "48383"
+    },
+    {
+        "municipio": "Arrieta",
+        "codigo_postal": "48114"
+    },
+    {
+        "municipio": "Arrigorriaga",
+        "codigo_postal": "48480"
+    },
+    {
+        "municipio": "Artea",
+        "codigo_postal": "48142"
+    },
+    {
+        "municipio": "Artzentales",
+        "codigo_postal": "48879"
+    },
+    {
+        "municipio": "Atxondo",
+        "codigo_postal": "48291"
+    },
+    {
+        "municipio": "Aulesti",
+        "codigo_postal": "48380"
+    },
+    {
+        "municipio": "Bakio",
+        "codigo_postal": "48130"
+    },
+    {
+        "municipio": "Balmaseda",
+        "codigo_postal": "48800"
+    },
+    {
+        "municipio": "Barakaldo",
+        "codigo_postal": "48901"
+    },
+    {
+        "municipio": "Barrika",
+        "codigo_postal": "48650"
+    },
+    {
+        "municipio": "Basauri",
+        "codigo_postal": "48970"
+    },
+    {
+        "municipio": "Bedia",
+        "codigo_postal": "48390"
+    },
+    {
+        "municipio": "Berango",
+        "codigo_postal": "48640"
+    },
+    {
+        "municipio": "Bermeo",
+        "codigo_postal": "48370"
+    },
+    {
+        "municipio": "Berriatua",
+        "codigo_postal": "48710"
+    },
+    {
+        "municipio": "Berriz",
+        "codigo_postal": "48240"
+    },
+    {
+        "municipio": "Bilbao",
+        "codigo_postal": "48001"
+    },
+    {
+        "municipio": "Busturia",
+        "codigo_postal": "48350"
+    },
+    {
+        "municipio": "Derio",
+        "codigo_postal": "48160"
+    },
+    {
+        "municipio": "Dima",
+        "codigo_postal": "48141"
+    },
+    {
+        "municipio": "Durango",
+        "codigo_postal": "48200"
+    },
+    {
+        "municipio": "Ea",
+        "codigo_postal": "48287"
+    },
+    {
+        "municipio": "Elantxobe",
+        "codigo_postal": "48310"
+    },
+    {
+        "municipio": "Elorrio",
+        "codigo_postal": "48230"
+    },
+    {
+        "municipio": "Erandio",
+        "codigo_postal": "48950"
+    },
+    {
+        "municipio": "Ereño",
+        "codigo_postal": "48313"
+    },
+    {
+        "municipio": "Ermua",
+        "codigo_postal": "48260"
+    },
+    {
+        "municipio": "Errigoiti",
+        "codigo_postal": "48309"
+    },
+    {
+        "municipio": "Etxebarri",
+        "codigo_postal": "48450"
+    },
+    {
+        "municipio": "Forua",
+        "codigo_postal": "48393"
+    },
+    {
+        "municipio": "Galdakao",
+        "codigo_postal": "48960"
+    },
+    {
+        "municipio": "Galdames",
+        "codigo_postal": "48191"
+    },
+    {
+        "municipio": "Gamiz-Fika",
+        "codigo_postal": "48113"
+    },
+    {
+        "municipio": "Garai",
+        "codigo_postal": "48200"
+    },
+    {
+        "municipio": "Gatika",
+        "codigo_postal": "48110"
+    },
+    {
+        "municipio": "Gautegiz Arteaga",
+        "codigo_postal": "48314"
+    },
+    {
+        "municipio": "Gernika-Lumo",
+        "codigo_postal": "48300"
+    },
+    {
+        "municipio": "Getxo",
+        "codigo_postal": "48991"
+    },
+    {
+        "municipio": "Gizaburuaga",
+        "codigo_postal": "48289"
+    },
+    {
+        "municipio": "Gordexola",
+        "codigo_postal": "48192"
+    },
+    {
+        "municipio": "Gorliz",
+        "codigo_postal": "48630"
+    },
+    {
+        "municipio": "Güeñes",
+        "codigo_postal": "48840"
+    },
+    {
+        "municipio": "Ibarrangelu",
+        "codigo_postal": "48311"
+    },
+    {
+        "municipio": "Igorre",
+        "codigo_postal": "48140"
+    },
+    {
+        "municipio": "Ispaster",
+        "codigo_postal": "48288"
+    },
+    {
+        "municipio": "Iurreta",
+        "codigo_postal": "48215"
+    },
+    {
+        "municipio": "Izurtza",
+        "codigo_postal": "48213"
+    },
+    {
+        "municipio": "Karrantza Harana",
+        "codigo_postal": "48890"
+    },
+    {
+        "municipio": "Kortezubi",
+        "codigo_postal": "48315"
+    },
+    {
+        "municipio": "Lanestosa",
+        "codigo_postal": "48895"
+    },
+    {
+        "municipio": "Larrabetzu",
+        "codigo_postal": "48195"
+    },
+    {
+        "municipio": "Laukiz",
+        "codigo_postal": "48111"
+    },
+    {
+        "municipio": "Leioa",
+        "codigo_postal": "48940"
+    },
+    {
+        "municipio": "Lekeitio",
+        "codigo_postal": "48280"
+    },
+    {
+        "municipio": "Lemoa",
+        "codigo_postal": "48330"
+    },
+    {
+        "municipio": "Lemoiz",
+        "codigo_postal": "48620"
+    },
+    {
+        "municipio": "Lezama",
+        "codigo_postal": "48196"
+    },
+    {
+        "municipio": "Loiu",
+        "codigo_postal": "48180"
+    },
+    {
+        "municipio": "Mallabia",
+        "codigo_postal": "48269"
+    },
+    {
+        "municipio": "Mañaria",
+        "codigo_postal": "48212"
+    },
+    {
+        "municipio": "Markina-Xemein",
+        "codigo_postal": "48270"
+    },
+    {
+        "municipio": "Maruri-Jatabe",
+        "codigo_postal": "48112"
+    },
+    {
+        "municipio": "Mendata",
+        "codigo_postal": "48382"
+    },
+    {
+        "municipio": "Mendexa",
+        "codigo_postal": "48289"
+    },
+    {
+        "municipio": "Meñaka",
+        "codigo_postal": "48120"
+    }
+]
