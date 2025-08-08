@@ -1,0 +1,33 @@
+:root {
+    --vs-font-size: 0.85rem;
+}
+
+.vs__dropdown-toggle {
+    padding: 0;
+}
+
+.vs__selected-options {
+    flex-wrap: nowrap;
+}
+
+.vs__search,
+.vs__search:focus {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-right: 0;
+}
+
+.vs__selected {
+    margin: 0;
+}
+
+.vs__actions {
+    padding: 0.25rem 0.45rem 0.25rem 0;
+}
+
+.vs__selected,
+.vs__selected-options {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
