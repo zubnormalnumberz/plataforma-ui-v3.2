@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Zubnormal Numberz">
+    <title>Buttons</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <link href="/assets/css/main.css" rel="stylesheet">
+    <link href="/scss/custom.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container-fluid pt-3">
+            <section-component>
+                <template #default>
+                    <button-component label="Primary"></button-component>
+                    <button-component label="Button with veeeeery laaaaarge label"></button-component>
+                    <button-component label="Button with icon" icon="bi-send"></button-component>
+                    <button-component label="Success" buttoncoloroption="success"></button-component>
+                    <button-component label="Danger" buttoncoloroption="danger"></button-component>
+                    <button-component label="Warning" buttoncoloroption="warning"></button-component>
+                    <button-component label="Info" buttoncoloroption="info"></button-component>
+                    <button-component label="Light button" buttoncoloroption="light"></button-component>
+                    <button-component label="I am a link" buttoncoloroption="link"></button-component>
+                    <button-component label="I am disabled" :disabledexpression=true></button-component>
+                </template>
+            </section-component>
+        </div>
+    </div>
+</body>
+<script type="module">
+
+    import Section from '/components/SectionComponent.js';
+    import Button from '/components/ButtonComponent.js';
+
+    const { createApp, ref } = Vue;
+
+    const app = createApp({});
+
+    app.component('section-component', Section);
+    app.component('button-component', Button);
+
+    app.mount('#app');
+</script>
+
+</html>

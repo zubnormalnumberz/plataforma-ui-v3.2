@@ -69,3 +69,7 @@
 .resize-none {
     resize: none;
 }
+
+.min-col-1 {
+    min-width: 8.333%;
+}
