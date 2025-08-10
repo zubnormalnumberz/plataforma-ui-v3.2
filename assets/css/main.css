@@ -73,3 +73,8 @@
 .min-col-1 {
     min-width: 8.333%;
 }
+
+.proccess_log {
+    overflow: scroll;
+    height: 500px;
+}
