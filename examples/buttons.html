@@ -23,16 +23,25 @@
         <div class="container-fluid pt-3">
             <section-component>
                 <template #default>
-                    <button-component label="Primary"></button-component>
-                    <button-component label="Button with veeeeery laaaaarge label"></button-component>
-                    <button-component label="Button with icon" icon="bi-send"></button-component>
-                    <button-component label="Success" buttoncoloroption="success"></button-component>
-                    <button-component label="Danger" buttoncoloroption="danger"></button-component>
-                    <button-component label="Warning" buttoncoloroption="warning"></button-component>
-                    <button-component label="Info" buttoncoloroption="info"></button-component>
-                    <button-component label="Light button" buttoncoloroption="light"></button-component>
-                    <button-component label="I am a link" buttoncoloroption="link"></button-component>
-                    <button-component label="I am disabled" :disabledexpression=true></button-component>
+                    <button-component label="Primary" :action="() => funcionrandom('Primary')"></button-component>
+                    <button-component label="Button with veeeeery laaaaarge label"
+                        :action="() => funcionrandom('Large label')"></button-component>
+                    <button-component label="Button with icon" icon="bi-send"
+                        :action="() => funcionrandom('Icon')"></button-component>
+                    <button-component label="Success" buttoncoloroption="success"
+                        :action="() => funcionrandom('Success')"></button-component>
+                    <button-component label="Danger" buttoncoloroption="danger"
+                        :action="() => funcionrandom('Danger')"></button-component>
+                    <button-component label="Warning" buttoncoloroption="warning"
+                        :action="() => funcionrandom('Warning')"></button-component>
+                    <button-component label="Info" buttoncoloroption="info"
+                        :action="() => funcionrandom('Info')"></button-component>
+                    <button-component label="Light button" buttoncoloroption="light"
+                        :action="() => funcionrandom('Light')"></button-component>
+                    <button-component label="I am a link" buttoncoloroption="link"
+                        :action="() => funcionrandom('Link')"></button-component>
+                    <button-component label="I am disabled" :disabledexpression=true
+                        :action="() => funcionrandom('Disabled')"></button-component>
                 </template>
             </section-component>
         </div>
@@ -45,7 +54,13 @@
 
     const { createApp, ref } = Vue;
 
-    const app = createApp({});
+    const app = createApp({
+        methods: {
+            funcionrandom(name) {
+                alert(`${name} button`);
+            }
+        }
+    });
 
     app.component('section-component', Section);
     app.component('button-component', Button);

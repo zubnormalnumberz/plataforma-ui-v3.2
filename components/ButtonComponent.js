@@ -5,8 +5,9 @@ export default {
         buttoncoloroption: { type: String, default: 'primary' },
         disabledexpression: { type: Boolean, default: false }, //DisabledExpression: { type: Function, default: () => false }
         HideExpression: { type: Boolean, default: false }, //HideExpression: { type: Function, required: false },
+        action: { type: Function, required: true } //action: { type: Object, required: true }
     },
-    template: `<button type="button" v-bind:disabled="isDisabled" class="btn btn-sm w-auto min-col-1" v-bind:class="classObject" v-bind:style="styleObject">
+    template: `<button type="button" @click="action()" v-bind:disabled="isDisabled" class="btn btn-sm w-auto min-col-1" v-bind:class="classObject" v-bind:style="styleObject">
                     <i v-if="icon != null" class="bi" v-bind:class="iconClass"></i>
                     {{ label }}
                 </button>`,
@@ -22,9 +23,8 @@ export default {
         classObject: function () {
             return "btn-" + this.buttoncoloroption
         },
-
         iconClass: function () {
             return this.icon
-        },
+        }
     }
 };
