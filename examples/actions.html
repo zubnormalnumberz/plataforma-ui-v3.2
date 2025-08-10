@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Zubnormal Numberz">
+    <title>Actions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <link href="/assets/css/main.css" rel="stylesheet">
+    <link href="/scss/custom.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/assets/js/modal.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container-fluid pt-3">
+            <section-component>
+                <template #default>
+                    <button-component label="Run success action" :action="successAction"></button-component>
+                    <button-component label="Run error action" :action="errorAction"></button-component>
+                    <button-component label="Run success action with redirect"
+                        :action="successWithRedirect"></button-component>
+                    <button-component label="Run background action" :action="runBackgroundAction"></button-component>
+                    <button-component label="Link to" buttoncoloroption="link"
+                        :action="() => redirectTo('http://www.goiener.com')"></button-component>
+                </template>
+            </section-component>
+        </div>
+        <modal-manager ref="modalManagerRef"></modal-manager>
+    </div>
+</body>
+<script type="module">
+
+    import Section from '/components/SectionComponent.js';
+    import Button from '/components/ButtonComponent.js';
+    import Modal from '/components/ModalManager.js';
+
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+        setup() {
+            const modalManagerRef = ref(null);
+
+            const successAction = () => {
+                const params = { title: "Proceso en ejecución 1", message: "Proceso terminado correctamente", success: true };
+                modalManagerRef.value?.modal_show(params);
+            };
+
+            const errorAction = () => {
+                const params = { title: "Proceso en ejecución 2", message: "Error interno en el proceso", success: false };
+                modalManagerRef.value?.modal_show(params);
+            };
+
+            const successWithRedirect = () => {
+                const params = { title: "Proceso en ejecución 2", message: "Fichero generado correctamente", success: true, goto_url: "http://www.goiener.com", browserNewTab: true };
+                modalManagerRef.value?.modal_show(params);
+            };
+
+            const runBackgroundAction = () => {
+                const params = { title: "Proceso en ejecución 2", job_id: 69769 }; // TODO: No definimos el mensaje aqui?
+                modalManagerRef.value?.modal_show(params);
+            };
+
+            const redirectTo = (URL) => {
+                window.open(URL, '_blank');
+            }
+
+            return { modalManagerRef, successAction, errorAction, successWithRedirect, runBackgroundAction, redirectTo };
+        }
+    });
+
+    app.component('section-component', Section);
+    app.component('button-component', Button);
+    app.component('modal-manager', Modal);
+
+    app.mount('#app');
+</script>
+
+</html>
