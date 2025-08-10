@@ -44,16 +44,20 @@ hr {
     font-size: 0.85rem;
 }
 
-.card-header,
-.card-body {
+.small-card-header {
+    @extend .card-header;
     font-size: 0.85rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-}
-
-.card-header {
     padding-left: 0.5rem;
     font-weight: 600
+}
+
+.small-card-body {
+    @extend .card-body;
+    font-size: 0.85rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
 .container-card {

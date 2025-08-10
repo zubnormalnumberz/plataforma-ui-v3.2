@@ -8,11 +8,11 @@ export default {
     template: `
         <div :class="classObject">
             <div class="card" :class="{ 'no-border-card': !border }">
-                <div v-if="title != null && border" class="card-header" :role="collapsible ? 'button' : null" @click="collapsible ? toggle() : null">
+                <div v-if="title != null && border" class="small-card-header" :role="collapsible ? 'button' : null" @click="collapsible ? toggle() : null">
                     {{ title }}
                 </div>
                 <div :id="collapseId" class="collapse show">
-                    <div class="card-body">
+                    <div class="small-card-body">
                         <div class="container-card w-auto">
                             <div class="row row-cols-12 row-gap-2">
                                 <slot>Contenido por defecto</slot>
